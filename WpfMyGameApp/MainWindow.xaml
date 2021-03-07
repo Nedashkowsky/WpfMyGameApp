@@ -1,0 +1,24 @@
+﻿<Window x:Class="WpfMyGameApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfMyGameApp"
+        mc:Ignorable="d"
+        Title="Построй свой ЦОД" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded">
+    <Grid>
+        <Canvas x:Name="canvas">
+            <Rectangle x:Name="rect" Fill="AliceBlue" HorizontalAlignment="Left" Height="39" Stroke="Black" VerticalAlignment="Top" Width="90" MouseDown="rect_MouseDown" MouseMove="rect_MouseMove" Canvas.Left="325" Canvas.Top="99"/>
+
+            <Rectangle x:Name="rack" Fill="DarkGray" Height="580" Stroke="Black" Canvas.Top="10" Width="243"/>
+            <Menu x:Name="menu" Height="23" Width="794"/>
+
+            <!--<Grid Canvas.Left="30" Canvas.Top="30" Width="182">
+                <Rectangle  x:Name="slot" Fill="LightGray" Height="67" Width="152" Canvas.Top="10" AllowDrop="True" Drop="slot_Drop"/>
+                <TextBlock Text="text" Height="41" TextAlignment="Center"></TextBlock>
+            </Grid>-->
+        </Canvas>
+    </Grid>
+
+
+</Window>
