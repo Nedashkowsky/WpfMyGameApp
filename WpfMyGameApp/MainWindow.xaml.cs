@@ -88,5 +88,10 @@ namespace WpfMyGameApp
 			Canvas.SetTop(card, 300);
 			canvas.Children.Add(card);
 		}
+
+		private void exit_Click(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
 	}
 }

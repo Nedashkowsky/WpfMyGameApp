@@ -6,12 +6,19 @@
         xmlns:local="clr-namespace:WpfMyGameApp"
         mc:Ignorable="d"
         Title="Построй свой ЦОД" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded">
-    <Grid>
-        <Canvas x:Name="canvas">
+    <DockPanel LastChildFill="True">
+        <Menu x:Name="menu" Height="20" DockPanel.Dock="Top">
+            <MenuItem Header="Игра">
+                <MenuItem Header="Новая игра"></MenuItem>
+                <MenuItem Header="Загрузить..."></MenuItem>
+                <MenuItem Header="Сохранить"></MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="exit" Header="Выход" Click="exit_Click"></MenuItem>
+        </Menu>
+        <Canvas x:Name="canvas" DockPanel.Dock="Left">
             <Rectangle x:Name="rack" Fill="DarkGray" Canvas.Left="10" Canvas.Top="10" Height="580" Stroke="Black" Width="243"/>
-            <Menu x:Name="menu" Height="23" Width="794"/>
         </Canvas>
-    </Grid>
+    </DockPanel>
 
 
 </Window>
