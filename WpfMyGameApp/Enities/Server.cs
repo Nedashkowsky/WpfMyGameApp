@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace WpfMyGameApp.Enities
 {
+	/// <summary>
+	/// Карточка "Сервер"
+	/// </summary>
 	class Server
 	{
 		/// <summary>
 		/// Имя сервера
 		/// </summary>
-		public int Name;
+		public string Name;
 
 		/// <summary>
 		/// Вес сервера в кг
@@ -19,7 +22,7 @@ namespace WpfMyGameApp.Enities
 		public int Weight;
 
 		/// <summary>
-		/// Объем памяти сервера
+		/// Кол-во процессоров
 		/// </summary>
 		public int CPUs;
 
@@ -29,7 +32,7 @@ namespace WpfMyGameApp.Enities
 		public int Price;
 
 		/// <summary>
-		/// Размер в юнитах
+		/// Размер сервера в юнитах
 		/// </summary>
 		public int Units;
 	}

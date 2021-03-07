@@ -9,7 +9,6 @@
     <Grid>
         <Canvas x:Name="canvas">
             <Rectangle x:Name="rect" Fill="AliceBlue" HorizontalAlignment="Left" Height="39" Stroke="Black" VerticalAlignment="Top" Width="90" MouseDown="rect_MouseDown" MouseMove="rect_MouseMove" Canvas.Left="325" Canvas.Top="99"/>
-
             <Rectangle x:Name="rack" Fill="DarkGray" Height="580" Stroke="Black" Canvas.Top="10" Width="243"/>
             <Menu x:Name="menu" Height="23" Width="794"/>
 

@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace WpfMyGameApp
@@ -81,14 +76,18 @@ namespace WpfMyGameApp
 		/// <param name="e"></param>
 		private void slot_Drop(object sender, DragEventArgs e)
 		{
+			// Принятые данные
 			IDataObject data = e.Data;
-			// as string вернет null если не получится привести типы 
-			// (string) выбросило бы исключение
-			string s = data.GetData(DataFormats.StringFormat) as string;
+			/* as string вернет null если не получится привести типы 
+			(string) выбросило бы исключение */
+			string s = data.GetData(DataFormats.StringFormat) as string; // приведение типа
+			// Сетка - приёмник данных
 			var grid = sender as Grid;
 			var rect = grid.Children[0] as Rectangle;
-			rect.Fill = new SolidColorBrush(Colors.Red);
+			rect.Fill = new SolidColorBrush(Colors.LightCyan);
 			//slot.Fill = new SolidColorBrush(Colors.Red);
+			var text = grid.Children[1] as TextBlock;
+			text.Text = s;
 		}
 
 		/// <summary>
@@ -98,6 +97,7 @@ namespace WpfMyGameApp
 		/// <param name="e"></param>
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+			// Формирование шкафа
 			for (var i = 0; i < 7; i++)
 			{
 				var grid = new Grid()
@@ -108,7 +108,7 @@ namespace WpfMyGameApp
 				Canvas.SetTop(grid, 30 + i * (height + spanY));
 				grid.Drop += slot_Drop;
 
-				// инициализатор
+				// Инициализатор
 				var rect = new Rectangle()
 				{
 					Width = 152,
@@ -128,6 +128,11 @@ namespace WpfMyGameApp
 
 				canvas.Children.Add(grid);
 			}
+
+			var card = new CardControl();
+			Canvas.SetLeft(card, 500);
+			Canvas.SetTop(card, 80);
+			canvas.Children.Add(card);
 		}
 	}
 }
