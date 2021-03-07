@@ -16,7 +16,7 @@
             <MenuItem x:Name="exit" Header="Выход" Click="exit_Click"></MenuItem>
         </Menu>
         <Canvas x:Name="canvas" DockPanel.Dock="Left">
-            <Rectangle x:Name="rack" Fill="DarkGray" Canvas.Left="10" Canvas.Top="10" Height="580" Stroke="Black" Width="243"/>
+            <Rectangle x:Name="rack" Fill="DarkGray" Canvas.Left="10" Canvas.Top="10" Height="580" Stroke="Black" Width="200"/>
         </Canvas>
     </DockPanel>
 
