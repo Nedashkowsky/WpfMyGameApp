@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="160">
 
-    <Grid Background="Bisque">
+    <Grid Background="Bisque" MouseDown="grid_MouseDown" MouseMove="grid_MouseMove">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
