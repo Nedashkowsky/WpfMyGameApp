@@ -10,7 +10,7 @@
         <Menu x:Name="menu" Height="20" DockPanel.Dock="Top">
             <MenuItem Header="Игра">
                 <MenuItem Header="Новая игра"></MenuItem>
-                <MenuItem Header="Загрузить..."></MenuItem>
+                <MenuItem x:Name="load" Header="Загрузить..." Click="load_Click"></MenuItem>
                 <MenuItem x:Name="save" Header="Сохранить" Click="save_Click"></MenuItem>
             </MenuItem>
             <MenuItem x:Name="exit" Header="Выход" Click="exit_Click"></MenuItem>

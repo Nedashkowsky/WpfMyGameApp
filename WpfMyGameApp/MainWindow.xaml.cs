@@ -19,10 +19,21 @@ namespace WpfMyGameApp
 		/// Высота ячейки
 		/// </summary>
 		private const double height = 60;
+
 		/// <summary>
 		/// Поле между ячейками
 		/// </summary>
 		private const double spanY = 20;
+
+		/// <summary>
+		/// Список ячеек шкафа
+		/// </summary>
+		private List<CardControl> cells = new List<CardControl>();
+
+		/// <summary>
+		/// Текущее состояние игры
+		/// </summary>
+		private Entities.GameState state;
 
 		public MainWindow()
 		{
@@ -42,7 +53,7 @@ namespace WpfMyGameApp
 			/* as <type> вернет null если не получится привести типы 
 			(<type>) выбросило бы исключение */
 			var source = data.GetData("Card") as Entities.Server; // приведение типа
-			// Приёмник данных - карточка
+																  // Приёмник данных - карточка
 			var dest = sender as CardControl;
 			dest.DataContext = source;
 		}
@@ -61,10 +72,13 @@ namespace WpfMyGameApp
 				{
 					AllowDrop = true
 				};
-				
+
 				Canvas.SetLeft(item, 30);
 				Canvas.SetTop(item, 30 + i * (height + spanY));
 				item.Drop += card_Drop;
+
+				// Сохранение ячейки шкафа в список
+				cells.Add(item);
 
 				canvas.Children.Add(item);
 			}
@@ -87,6 +101,11 @@ namespace WpfMyGameApp
 			canvas.Children.Add(card);
 		}
 
+		/// <summary>
+		/// Выход из приложения
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void exit_Click(object sender, RoutedEventArgs e)
 		{
 			Close();
@@ -99,10 +118,67 @@ namespace WpfMyGameApp
 		/// <param name="e"></param>
 		private void save_Click(object sender, RoutedEventArgs e)
 		{
-			var dialog = new System.Windows.Forms.SaveFileDialog();
-			if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-			{ 
-			//...
+			try
+			{
+				// Диалог для выбора имени файла
+				var dialog = new System.Windows.Forms.SaveFileDialog()
+				{
+					Filter = "Файл (*.xml)|*.xml|Все файлы (*.*)|*.*"
+				};
+
+				// Выбор файла для сохранения
+				if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+				{
+					List<Entities.Server> servers = new List<Entities.Server>();
+					foreach (CardControl cell in cells)
+					{
+						if (cell.DataContext is Entities.Server)
+							servers.Add(cell.DataContext as Entities.Server);
+						else
+							servers.Add(new Entities.Server());
+					}
+
+					state = new Entities.GameState()
+					{
+						Servers = servers.ToArray()
+					};
+
+					state.Save(dialog.FileName);
+				}
+			}
+			catch (Exception ex)
+			{
+				System.Windows.Forms.MessageBox.Show(ex.Message);
+			}
+		}
+
+		/// <summary>
+		/// Загрузка игры из файла
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void load_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				// Диалог для выбора имени файла
+				var dialog = new System.Windows.Forms.OpenFileDialog()
+				{
+					Filter = "Файл (*.xml)|*.xml|Все файлы (*.*)|*.*"
+				};
+				// Выбор файла для загрузки
+				if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+				{
+					state = Entities.GameState.Load(dialog.FileName);
+					for (int i = 0; i < 7; i++)
+					{
+						cells[i].DataContext = state.Servers[i];
+					}
+				}
+			}
+			catch(Exception ex)
+			{
+				System.Windows.Forms.MessageBox.Show(ex.Message);
 			}
 		}
 	}
