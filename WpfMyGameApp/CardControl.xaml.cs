@@ -63,7 +63,8 @@ namespace WpfMyGameApp
 
 			// Сохранение данных для перетаскивания
 			var data = new DataObject();
-			data.SetData("Card", this);
+			// Сохранение контекста данных
+			data.SetData("Card", DataContext);
 			// Начало перетаскивая
 			DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Copy);
 		}

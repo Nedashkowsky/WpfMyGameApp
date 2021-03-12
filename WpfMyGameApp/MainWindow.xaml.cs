@@ -41,11 +41,10 @@ namespace WpfMyGameApp
 			IDataObject data = e.Data;
 			/* as <type> вернет null если не получится привести типы 
 			(<type>) выбросило бы исключение */
-			var source = data.GetData("Card") as CardControl; // приведение типа
-			// Приёмник данных
+			var source = data.GetData("Card") as Entities.Server; // приведение типа
+			// Приёмник данных - карточка
 			var dest = sender as CardControl;
-			dest.Server = source.Server;
-			dest.Price = source.Price;
+			dest.DataContext = source;
 		}
 
 		/// <summary>
@@ -70,28 +69,41 @@ namespace WpfMyGameApp
 				canvas.Children.Add(item);
 			}
 
+			var server = new Entities.Server()
+			{
+				Name = "IBM",
+				Price = 1000,
+				Weight = 10,
+				CPUs = 2,
+				Size = 1
+			};
+
 			var card = new CardControl()
 			{
-				Server = "IBM",
-				Price = 1000
+				DataContext = server
 			};
 			Canvas.SetLeft(card, 500);
 			Canvas.SetTop(card, 80);
-			canvas.Children.Add(card);
-
-			card = new CardControl()
-			{
-				Server = "HP",
-				Price = 5000
-			};
-			Canvas.SetLeft(card, 500);
-			Canvas.SetTop(card, 300);
 			canvas.Children.Add(card);
 		}
 
 		private void exit_Click(object sender, RoutedEventArgs e)
 		{
 			Close();
+		}
+
+		/// <summary>
+		/// Сохранение состояния игры в файл
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void save_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new System.Windows.Forms.SaveFileDialog();
+			if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{ 
+			//...
+			}
 		}
 	}
 }
