@@ -11,13 +11,14 @@ namespace WpfMyGameApp.Entities
 	/// <summary>
 	/// Состояние игры
 	/// </summary>
+	[XmlInclude(typeof(Server))]
 	public class GameState
 	{
 		/// <summary>
 		/// Список верверов
 		/// </summary>
 		[XmlElement(ElementName = "Server")]
-		public Server[] Servers { get; set; }
+		public Entity[] Servers { get; set; }
 
 		/// <summary>
 		/// Конструктор иниациализирующий массив
@@ -41,7 +42,7 @@ namespace WpfMyGameApp.Entities
 				Indent = true
 			};
 			// Писатель в Xml-файл
-			using (XmlWriter wrt = XmlWriter.Create(name))
+			using (XmlWriter wrt = XmlWriter.Create(name,settings))
 			{
 				// Выполнение сериализации
 				ser.Serialize(wrt, this);
@@ -64,7 +65,7 @@ namespace WpfMyGameApp.Entities
 					return (GameState)ser.Deserialize(rdr);
 				}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return new GameState();
 			}

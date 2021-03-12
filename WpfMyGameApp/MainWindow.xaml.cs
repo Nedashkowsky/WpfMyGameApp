@@ -148,7 +148,14 @@ namespace WpfMyGameApp
 			}
 			catch (Exception ex)
 			{
-				System.Windows.Forms.MessageBox.Show(ex.Message);
+				string message = "";
+				do
+				{
+					message += ex.Message + Environment.NewLine;
+					ex = ex.InnerException;
+				}
+				while (ex != null);
+				System.Windows.Forms.MessageBox.Show(message);
 			}
 		}
 

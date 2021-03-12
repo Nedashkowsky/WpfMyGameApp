@@ -10,7 +10,7 @@ namespace WpfMyGameApp.Entities
 	/// <summary>
 	/// Карточка "Сервер"
 	/// </summary>
-	public class Server
+	public class Server : Entity
 	{
 		/// <summary>
 		/// Имя сервера
