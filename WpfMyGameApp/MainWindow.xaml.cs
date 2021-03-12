@@ -123,7 +123,7 @@ namespace WpfMyGameApp
 				// Диалог для выбора имени файла
 				var dialog = new System.Windows.Forms.SaveFileDialog()
 				{
-					Filter = "Файл (*.xml)|*.xml|Все файлы (*.*)|*.*"
+					Filter = "Файл (*.xml)|*.xml|Файл (*.json)|*.json|Все файлы (*.*)|*.*"
 				};
 
 				// Выбор файла для сохранения
@@ -142,8 +142,21 @@ namespace WpfMyGameApp
 					{
 						Servers = servers.ToArray()
 					};
-
-					state.Save(dialog.FileName);
+					switch(dialog.FilterIndex)
+					{
+						case 1:
+							// Сериализация в XML
+							state.Save(dialog.FileName);
+							break;
+						case 2:
+							// Сериализация в JSON
+							string json = Newtonsoft.Json.JsonConvert.SerializeObject(state);
+							System.IO.File.WriteAllText(dialog.FileName, json);
+							break;
+						default:
+							break;
+					}
+					
 				}
 			}
 			catch (Exception ex)
