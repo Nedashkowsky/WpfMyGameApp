@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WpfMyGameApp
 {
@@ -22,28 +12,6 @@ namespace WpfMyGameApp
 	{
 		private double dx;
 		private double dy;
-
-		/// <summary>
-		/// Имя сервера
-		/// </summary>
-		public string Server
-		{
-			get { return name.Text; }
-			set { name.Text = value; }
-		}
-
-		/// <summary>
-		/// Цена сервера
-		/// </summary>
-		public int Price
-		{
-			get 
-			{
-				int result;
-				return int.TryParse(price.Text, out result) ? result : -1;
-			}
-			set { price.Text = value.ToString(); }
-		}
 
 		public string Image
 		{
@@ -94,6 +62,21 @@ namespace WpfMyGameApp
 				Canvas.SetLeft((UIElement)sender, x);
 				Canvas.SetTop((UIElement)sender, y);
 			}
+		}
+
+		/// <summary>
+		/// Завершение перетаскивания
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public static void card_Drop(object sender, DragEventArgs e)
+		{
+			// Принятые данные
+			IDataObject data = e.Data;
+			var source = data.GetData("Card");
+			// Приёмник данных - карточка
+			var dest = sender as CardControl;
+			dest.DataContext = source;
 		}
 	}
 }

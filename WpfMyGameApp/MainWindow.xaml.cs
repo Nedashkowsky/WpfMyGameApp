@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
+using WpfMyGameApp.Entities;
 
 namespace WpfMyGameApp
 {
@@ -33,7 +29,7 @@ namespace WpfMyGameApp
 		/// <summary>
 		/// Текущее состояние игры
 		/// </summary>
-		private Entities.GameState state;
+		private GameState state;
 
 		public MainWindow()
 		{
@@ -41,19 +37,40 @@ namespace WpfMyGameApp
 			InitializeComponent();
 		}
 
-		/// <summary>
-		/// Завершение перетаскивания
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void card_Drop(object sender, DragEventArgs e)
+		private void CreateCard()
 		{
-			// Принятые данные
-			IDataObject data = e.Data;
-			var source = data.GetData("Card"); 
-			// Приёмник данных - карточка
-			var dest = sender as CardControl;
-			dest.DataContext = source;
+			var server = new Server()
+			{
+				Name = "IBM",
+				Price = 1000,
+				Weight = 10,
+				CPUs = 2,
+				Size = 1
+			};
+
+			var card = new CardControl()
+			{
+				DataContext = server
+			};
+			Canvas.SetLeft(card, 500);
+			Canvas.SetTop(card, 80);
+			canvas.Children.Add(card);
+
+			var kvm = new KvmConsole()
+			{
+				Name = "ATEL",
+				Price = 300,
+				Weight = 5,
+				Count = 3
+			};
+
+			var card2 = new CardControl()
+			{
+				DataContext = kvm
+			};
+			Canvas.SetLeft(card2, 500);
+			Canvas.SetTop(card2, 200);
+			canvas.Children.Add(card2);
 		}
 
 		/// <summary>
@@ -73,7 +90,7 @@ namespace WpfMyGameApp
 
 				Canvas.SetLeft(item, 30);
 				Canvas.SetTop(item, 30 + i * (height + spanY));
-				item.Drop += card_Drop;
+				item.Drop += CardControl.card_Drop;
 
 				// Сохранение ячейки шкафа в список
 				cells.Add(item);
@@ -81,38 +98,7 @@ namespace WpfMyGameApp
 				canvas.Children.Add(item);
 			}
 
-			var server = new Entities.Server()
-			{
-				Name = "IBM",
-				Price = 1000,
-				Weight = 10,
-				CPUs = 2,
-				Size = 1
-			};
-
-			var card = new CardControl()
-			{
-				DataContext = server
-			};
-			Canvas.SetLeft(card, 500);
-			Canvas.SetTop(card, 80);
-			canvas.Children.Add(card);
-
-			var kvm = new Entities.KvmControl()
-			{
-				Name = "ATEL",
-				Price = 300,
-				Weight = 5,
-				Count = 3
-			};
-
-			var card2 = new CardControl()
-			{
-				DataContext = kvm
-			};
-			Canvas.SetLeft(card2, 500);
-			Canvas.SetTop(card2, 200);
-			canvas.Children.Add(card2);
+			CreateCard();
 		}
 
 		/// <summary>
@@ -143,19 +129,22 @@ namespace WpfMyGameApp
 				// Выбор файла для сохранения
 				if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 				{
-					List<Entities.Server> servers = new List<Entities.Server>();
+					state = new GameState();
 					foreach (CardControl cell in cells)
 					{
-						if (cell.DataContext is Entities.Server)
-							servers.Add(cell.DataContext as Entities.Server);
-						else
-							servers.Add(new Entities.Server());
+						if (cell.DataContext is Server)
+							state.Entities.Add(cell.DataContext as Server);
+						else if (cell.DataContext is KvmConsole)
+							state.Entities.Add(cell.DataContext as KvmConsole);
+						else if (cell.DataContext is Rack)
+							state.Entities.Add(cell.DataContext as Rack);
+						else if (cell.DataContext is NetworkSwitch)
+							state.Entities.Add(cell.DataContext as NetworkSwitch);
+						else if (cell.DataContext is Storage)
+							state.Entities.Add(cell.DataContext as Storage);
+						else state.Entities.Add(new Server());
 					}
 
-					state = new Entities.GameState()
-					{
-						Servers = servers.ToArray()
-					};
 					switch (dialog.FilterIndex)
 					{
 						case 1:
@@ -203,10 +192,10 @@ namespace WpfMyGameApp
 				// Выбор файла для загрузки
 				if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 				{
-					state = Entities.GameState.Load(dialog.FileName);
+					state = GameState.Load(dialog.FileName);
 					for (int i = 0; i < 7; i++)
 					{
-						cells[i].DataContext = state.Servers[i];
+						cells[i].DataContext = state.Entities[i];
 					}
 				}
 			}

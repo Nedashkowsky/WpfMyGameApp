@@ -9,6 +9,12 @@ namespace WpfMyGameApp.Entities
 	public class Server : Entity
 	{
 		/// <summary>
+		/// Вес в кг
+		/// </summary>
+		[XmlAttribute()]
+		public int Weight { get; set; }
+
+		/// <summary>
 		/// Кол-во процессоров
 		/// </summary>
 		[XmlAttribute(AttributeName = "CPU")]

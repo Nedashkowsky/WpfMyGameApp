@@ -1,31 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 
 namespace WpfMyGameApp.Entities
 {
 	/// <summary>
 	/// Состояние игры
 	/// </summary>
-	[XmlInclude(typeof(Server))]
+	[XmlRoot(ElementName = "State")]
 	public class GameState
 	{
 		/// <summary>
-		/// Список верверов
+		/// Список сущностей
 		/// </summary>
-		[XmlElement(ElementName = "Server")]
-		public Entity[] Servers { get; set; }
+		[XmlElement(ElementName = "Entity")]
+		public List<Entity> Entities { get; set; }
 
 		/// <summary>
-		/// Конструктор иниациализирующий массив
+		/// Конструктор без параметров
 		/// </summary>
 		public GameState()
 		{
-			Servers = new Server[7];
+			Entities = new List<Entity>();
 		}
 
 		/// <summary>

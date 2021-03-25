@@ -6,6 +6,11 @@ namespace WpfMyGameApp.Entities
 	/// <summary>
 	/// Корневой класс для иерархии
 	/// </summary>
+	[XmlInclude (typeof(Server))]
+	[XmlInclude(typeof(KvmConsole))]
+	[XmlInclude(typeof(Rack))]
+	[XmlInclude(typeof(Storage))]
+	[XmlInclude(typeof(NetworkSwitch))]
 	public abstract class Entity
 	{
 		/// <summary>
@@ -15,19 +20,13 @@ namespace WpfMyGameApp.Entities
 		public string Name { get; set; }
 
 		/// <summary>
-		/// Вес в кг
-		/// </summary>
-		[XmlAttribute()]
-		public int Weight { get; set; }
-
-		/// <summary>
-		/// Стоимость сервера в деньгах
+		/// Стоимость в деньгах
 		/// </summary>
 		[XmlAttribute()]
 		private int price;
 
 		/// <summary>
-		/// Стоимость сервера в деньгах
+		/// Стоимость в деньгах
 		/// </summary>
 		[XmlAttribute()]
 		public int Price
