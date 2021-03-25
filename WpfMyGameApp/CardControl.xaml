@@ -10,17 +10,19 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="name" Text="{Binding Name}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock x:Name="cpu" Text="{Binding StringFormat={}{0} CPU, Path=CPUs}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock x:Name="size" Text="{Binding StringFormat={}{0} U, Path=Size}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock x:Name="weight" Text="{Binding StringFormat={}{0} кг, Path=Weight}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock x:Name="count" Text="{Binding StringFormat={}{0} шт., Path=Count}" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock x:Name="price" Text="{Binding StringFormat={}{0} USD, Path=Price}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="name" Text="{Binding Name}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="cpu" Text="{Binding StringFormat={}{0} CPU, Path=CPUs}" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="size" Text="{Binding StringFormat={}{0} U, Path=Size}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="weight" Text="{Binding StringFormat={}{0} кг, Path=Weight}" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="count" Text="{Binding StringFormat={}{0} шт., Path=Count}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="price" Text="{Binding StringFormat={}{0} USD, Path=Price}" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Image x:Name="img" Source="{Binding Path=Image}" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="3,0,53.2,0.4"></Image>
     </Grid>
 </UserControl>

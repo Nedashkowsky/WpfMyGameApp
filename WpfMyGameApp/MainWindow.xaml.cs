@@ -50,10 +50,8 @@ namespace WpfMyGameApp
 		{
 			// Принятые данные
 			IDataObject data = e.Data;
-			/* as <type> вернет null если не получится привести типы 
-			(<type>) выбросило бы исключение */
-			var source = data.GetData("Card") as Entities.Server; // приведение типа
-																  // Приёмник данных - карточка
+			var source = data.GetData("Card"); 
+			// Приёмник данных - карточка
 			var dest = sender as CardControl;
 			dest.DataContext = source;
 		}
@@ -99,6 +97,22 @@ namespace WpfMyGameApp
 			Canvas.SetLeft(card, 500);
 			Canvas.SetTop(card, 80);
 			canvas.Children.Add(card);
+
+			var kvm = new Entities.KvmControl()
+			{
+				Name = "ATEL",
+				Price = 300,
+				Weight = 5,
+				Count = 3
+			};
+
+			var card2 = new CardControl()
+			{
+				DataContext = kvm
+			};
+			Canvas.SetLeft(card2, 500);
+			Canvas.SetTop(card2, 200);
+			canvas.Children.Add(card2);
 		}
 
 		/// <summary>
@@ -142,7 +156,7 @@ namespace WpfMyGameApp
 					{
 						Servers = servers.ToArray()
 					};
-					switch(dialog.FilterIndex)
+					switch (dialog.FilterIndex)
 					{
 						case 1:
 							// Сериализация в XML
@@ -156,7 +170,7 @@ namespace WpfMyGameApp
 						default:
 							break;
 					}
-					
+
 				}
 			}
 			catch (Exception ex)
@@ -196,7 +210,7 @@ namespace WpfMyGameApp
 					}
 				}
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				System.Windows.Forms.MessageBox.Show(ex.Message);
 			}

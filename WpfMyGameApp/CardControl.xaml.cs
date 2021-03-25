@@ -45,6 +45,14 @@ namespace WpfMyGameApp
 			set { price.Text = value.ToString(); }
 		}
 
+		public string Image
+		{
+			get
+			{
+				return img.Source.ToString();
+			}
+		}
+
 		public CardControl()
 		{
 			InitializeComponent();

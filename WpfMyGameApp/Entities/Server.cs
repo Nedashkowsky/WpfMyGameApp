@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace WpfMyGameApp.Entities
@@ -13,48 +9,10 @@ namespace WpfMyGameApp.Entities
 	public class Server : Entity
 	{
 		/// <summary>
-		/// Имя сервера
-		/// </summary>
-		[XmlAttribute()]
-		public string Name { get; set; }
-
-		/// <summary>
-		/// Вес сервера в кг
-		/// </summary>
-		[XmlAttribute()]
-		public int Weight { get; set; }
-
-		/// <summary>
 		/// Кол-во процессоров
 		/// </summary>
 		[XmlAttribute(AttributeName = "CPU")]
 		public int CPUs { get; set; }
-
-		/// <summary>
-		/// Стоимость сервера в деньгах
-		/// </summary>
-		[XmlAttribute()]
-		private int price;
-
-		/// <summary>
-		/// Стоимость сервера в деньгах
-		/// </summary>
-		[XmlAttribute()]
-		public int Price
-		{
-			get
-			{
-				return price;
-			}
-			set
-			{
-				if (value < 0)
-				{
-					throw new Exception("Цена не может быть отрицательной");
-				}
-				price = value;
-			}
-		}
 
 		/// <summary>
 		/// Размер сервера в юнитах
@@ -67,10 +25,23 @@ namespace WpfMyGameApp.Entities
 		/// </summary>
 		public int Count
 		{
-			get 
-			{ 
-				return (Size == 0) ? 0 : 6 / Size; 
+			get
+			{
+				return (Size == 0) ? 0 : 6 / Size;
 			}
+		}
+
+		/// <summary>
+		/// Адрес картинки
+		/// </summary>
+		private readonly string img = "server.png";
+
+		/// <summary>
+		/// Картинка
+		/// </summary>
+		public string Image
+		{
+			get { return img; }
 		}
 	}
 }
