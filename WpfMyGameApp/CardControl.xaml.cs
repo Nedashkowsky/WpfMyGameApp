@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using WpfMyGameApp.Entities;
 
 namespace WpfMyGameApp
 {
@@ -18,6 +20,24 @@ namespace WpfMyGameApp
 			get
 			{
 				return img.Source.ToString();
+			}
+		}
+
+		private bool isRackCard = false;
+
+		/// <summary>
+		/// Является ли карточка карточкой для шкафа
+		/// </summary>
+		public bool IsRackCard
+		{
+			get { return isRackCard; }
+
+			set 
+			{
+				isRackCard = value;
+
+				if (isRackCard)
+					card.Background = Brushes.Aquamarine;
 			}
 		}
 
@@ -77,6 +97,35 @@ namespace WpfMyGameApp
 			// Приёмник данных - карточка
 			var dest = sender as CardControl;
 			dest.DataContext = source;
+		}
+
+		private void CardControl1_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			switch(e.NewValue.GetType().Name)
+			{
+				case nameof(Server):
+					var server = e.NewValue as Server;
+					card.Background = Brushes.Pink;
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Обработчик события перетаскивания карточки в соотвествии с ее типом
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void card_DragOver(object sender, DragEventArgs e)
+		{
+			e.Effects = DragDropEffects.Copy;
+			// Перетаскиваемый объект
+			IDataObject data = e.Data;
+			object card = data.GetData("Card");
+
+			if (IsRackCard && !(card is Rack))
+				e.Effects = DragDropEffects.None;
+			else if (!IsRackCard && (card is Rack))
+				e.Effects = DragDropEffects.None;
 		}
 	}
 }

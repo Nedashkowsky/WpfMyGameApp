@@ -71,6 +71,54 @@ namespace WpfMyGameApp
 			Canvas.SetLeft(card2, 500);
 			Canvas.SetTop(card2, 200);
 			canvas.Children.Add(card2);
+
+			var rack = new Rack()
+			{
+				Name = "Rack",
+				Price = 900,
+				Capacity = 100,
+				Count = 2
+			};
+
+			var card3 = new CardControl()
+			{
+				DataContext = rack
+			};
+			Canvas.SetLeft(card3, 500);
+			Canvas.SetTop(card3, 320);
+			canvas.Children.Add(card3);
+
+			var nwswitch = new NetworkSwitch()
+			{
+				Name = "Switch",
+				Price = 350,
+				Weight = 2,
+				Count = 6
+			};
+
+			var card4 = new CardControl()
+			{
+				DataContext = nwswitch
+			};
+			Canvas.SetLeft(card4, 700);
+			Canvas.SetTop(card4, 80);
+			canvas.Children.Add(card4);
+
+			var storage = new Storage()
+			{
+				Name = "Storage",
+				Price = 700,
+				Weight = 10,
+				Size = 200
+			};
+
+			var card5 = new CardControl()
+			{
+				DataContext = storage
+			};
+			Canvas.SetLeft(card5, 700);
+			Canvas.SetTop(card5, 200);
+			canvas.Children.Add(card5);
 		}
 
 		/// <summary>
@@ -81,7 +129,7 @@ namespace WpfMyGameApp
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			// Формирование шкафа
-			for (var i = 0; i < 7; i++)
+			for (var i = 0; i < 8; i++)
 			{
 				var item = new CardControl()
 				{
@@ -97,7 +145,7 @@ namespace WpfMyGameApp
 
 				canvas.Children.Add(item);
 			}
-
+			cells[7].IsRackCard = true;
 			CreateCard();
 		}
 
