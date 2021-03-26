@@ -115,10 +115,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="server.png" />
+    <Resource Include="Resources\server.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="kvm.jpeg" />
+    <Resource Include="Resources\kvm.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\rack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\storage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\switch.jpeg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

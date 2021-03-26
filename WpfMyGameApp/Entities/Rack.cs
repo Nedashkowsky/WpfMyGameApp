@@ -16,5 +16,18 @@ namespace WpfMyGameApp.Entities
 		/// </summary>
 		[XmlAttribute()]
 		public int Capacity { get; set; }
+
+		/// <summary>
+		/// Адрес картинки
+		/// </summary>
+		private readonly string img = "Resources/rack.png";
+
+		/// <summary>
+		/// Картинка
+		/// </summary>
+		public string Image
+		{
+			get { return img; }
+		}
 	}
 }

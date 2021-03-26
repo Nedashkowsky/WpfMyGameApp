@@ -40,7 +40,7 @@ namespace WpfMyGameApp.Entities
 		/// <summary>
 		/// Адрес картинки
 		/// </summary>
-		private readonly string img = "server.png";
+		private readonly string img = "Resources/server.png";
 
 		/// <summary>
 		/// Картинка

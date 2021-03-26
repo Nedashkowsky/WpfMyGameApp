@@ -60,7 +60,8 @@ namespace WpfMyGameApp
 			// Сохранение данных для перетаскивания
 			var data = new DataObject();
 			// Сохранение контекста данных
-			data.SetData("Card", DataContext);
+			if(DataContext != null)
+				data.SetData("Card", DataContext);
 			// Начало перетаскивая
 			DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Copy);
 		}
@@ -106,6 +107,55 @@ namespace WpfMyGameApp
 				case nameof(Server):
 					var server = e.NewValue as Server;
 					card.Background = Brushes.Pink;
+					property1.Text = server.Name;
+					property2.Text = $"{server.Weight} кг";
+					property3.Text = $"{server.Price} USD";
+					property4.Text = $"{server.CPUs} CPU";
+					property5.Text = $"{server.Size} U";
+					property6.Text = $"{server.Count} шт.";
+					break;
+
+				case nameof(KvmConsole):
+					var kvm = e.NewValue as KvmConsole;
+					card.Background = Brushes.Bisque;
+
+					property1.Text = kvm.Name;
+					property2.Text = $"{kvm.Count} шт.";
+					property3.Text = $"{kvm.Price} USD";
+					property4.Text = $"{kvm.Weight} кг"; ;
+					break;
+
+				case nameof(Rack):
+					var rack = e.NewValue as Rack;
+					card.Background = Brushes.Aquamarine;
+
+					property1.Text = rack.Name;
+					property2.Text = $"{rack.Count} шт.";
+					property3.Text = $"{rack.Price} USD";
+					property4.Text = $"{rack.Capacity} кг"; ;
+					break;
+
+				case nameof(NetworkSwitch):
+					var nwswitch = e.NewValue as NetworkSwitch;
+					card.Background = Brushes.Coral;
+
+					property1.Text = nwswitch.Name;
+					property2.Text = $"{nwswitch.Count} шт.";
+					property3.Text = $"{nwswitch.Price} USD";
+					property4.Text = $"{nwswitch.Weight} кг"; ;
+					break;
+
+				case nameof(Storage):
+					var storage = e.NewValue as Storage;
+					card.Background = Brushes.DarkOrchid;
+
+					property1.Text = storage.Name;
+					property2.Text = $"{storage.Size} Тбайт";
+					property3.Text = $"{storage.Price} USD";
+					property4.Text = $"{storage.Weight} кг"; ;
+					break;
+
+				default:
 					break;
 			}
 		}

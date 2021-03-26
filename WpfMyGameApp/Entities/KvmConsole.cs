@@ -19,7 +19,7 @@ namespace WpfMyGameApp.Entities
 		/// <summary>
 		/// Адрес картинки
 		/// </summary>
-		private readonly string img = "kvm.jpeg";
+		private readonly string img = "Resources/kvm.jpeg";
 
 		/// <summary>
 		/// Картинка
