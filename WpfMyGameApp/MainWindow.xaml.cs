@@ -24,16 +24,20 @@ namespace WpfMyGameApp
 		/// <summary>
 		/// Список ячеек шкафа
 		/// </summary>
-		private List<CardControl> cells = new List<CardControl>();
+		public static readonly List<CardControl> cells;
 
 		/// <summary>
 		/// Текущее состояние игры
 		/// </summary>
 		private GameState state;
+		
+		static MainWindow()
+		{
+			cells = new List<CardControl>();
+		}
 
 		public MainWindow()
 		{
-
 			InitializeComponent();
 		}
 
@@ -182,18 +186,18 @@ namespace WpfMyGameApp
 					state = new GameState();
 					foreach (CardControl cell in cells)
 					{
-						if (cell.DataContext is Server)
-							state.Entities.Add(cell.DataContext as Server);
-						else if (cell.DataContext is KvmConsole)
-							state.Entities.Add(cell.DataContext as KvmConsole);
-						else if (cell.DataContext is Rack)
-							state.Entities.Add(cell.DataContext as Rack);
-						else if (cell.DataContext is NetworkSwitch)
-							state.Entities.Add(cell.DataContext as NetworkSwitch);
-						else if (cell.DataContext is Storage)
-							state.Entities.Add(cell.DataContext as Storage);
-						else state.Entities.Add(new Server());
+						if (cell.DataContext != null)
+						{
+							var entity = cell.DataContext as Entity;
+							state.Entities.Add(entity);
+							state.Price += entity.Price;
+						}
+						else 
+							state.Entities.Add(new Server());
 					}
+
+					// Отображение суммы на экране
+					price.Text = state.Price.ToString();
 
 					switch (dialog.FilterIndex)
 					{

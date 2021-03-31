@@ -17,6 +17,7 @@
         </Menu>
         <Canvas x:Name="canvas" DockPanel.Dock="Left">
             <Rectangle x:Name="rack" Fill="DarkGray" Canvas.Left="10" Canvas.Top="10" Height="670" Stroke="Black" Width="200"/>
+            <TextBlock x:Name="price" Canvas.Left="248" TextWrapping="Wrap" Text="TextBlock" Canvas.Top="29"/>
         </Canvas>
     </DockPanel>
 
