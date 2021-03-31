@@ -76,6 +76,7 @@
       <DependentUpon>CardControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Equipment.cs" />
     <Compile Include="Entities\GameState.cs" />
     <Compile Include="Entities\KvmConsole.cs" />
     <Compile Include="Entities\NetworkSwitch.cs" />

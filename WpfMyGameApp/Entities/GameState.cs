@@ -17,8 +17,16 @@ namespace WpfMyGameApp.Entities
 		[XmlElement(ElementName = "Entity")]
 		public List<Entity> Entities { get; set; }
 
-		// Суммарная цена стойки
+		/// <summary>
+		/// Суммарная цена стойки
+		/// </summary>
 		public int Price { get; set; }
+
+		/// <summary>
+		/// Оставшаяся нагрузочная способность стойки в кг
+		/// <para>Вес не дложен быть меньше нуля</para>
+		/// </summary>
+		public int Capacity { get; set; }
 
 		/// <summary>
 		/// Конструктор без параметров

@@ -6,14 +6,8 @@ namespace WpfMyGameApp.Entities
 	/// <summary>
 	/// Карточка "Сервер"
 	/// </summary>
-	public class Server : Entity
+	public class Server : Equipment
 	{
-		/// <summary>
-		/// Вес в кг
-		/// </summary>
-		[XmlAttribute()]
-		public int Weight { get; set; }
-
 		/// <summary>
 		/// Кол-во процессоров
 		/// </summary>

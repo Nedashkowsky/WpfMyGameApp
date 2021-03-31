@@ -190,14 +190,29 @@ namespace WpfMyGameApp
 						{
 							var entity = cell.DataContext as Entity;
 							state.Entities.Add(entity);
+							// Расчета цены
 							state.Price += entity.Price;
+							// Расчет нагрузки
+							if(entity is Rack)
+							{
+								state.Capacity += (entity as Rack).Capacity;
+							}
+							else if (entity is Equipment)
+							{
+								state.Capacity -= (entity as Equipment).Weight;
+							}
+							else
+							{
+								throw new Exception("Неизвестное оборудование в стойке");
+							}
 						}
 						else 
 							state.Entities.Add(new Server());
 					}
 
-					// Отображение суммы на экране
+					// Отображение на экране
 					price.Text = state.Price.ToString();
+					capacity.Text = state.Capacity.ToString();
 
 					switch (dialog.FilterIndex)
 					{

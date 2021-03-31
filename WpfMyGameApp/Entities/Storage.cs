@@ -3,14 +3,8 @@ using System.Xml.Serialization;
 
 namespace WpfMyGameApp.Entities
 {
-	public class Storage : Entity
+	public class Storage : Equipment
 	{
-		/// <summary>
-		/// Вес в кг
-		/// </summary>
-		[XmlAttribute()]
-		public int Weight { get; set; }
-
 		/// <summary>
 		/// Ёмкость Тб
 		/// </summary>
