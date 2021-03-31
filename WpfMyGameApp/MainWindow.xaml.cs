@@ -159,6 +159,8 @@ namespace WpfMyGameApp
 			Close();
 		}
 
+		string json;
+
 		/// <summary>
 		/// Сохранение состояния игры в файл
 		/// </summary>
@@ -201,7 +203,7 @@ namespace WpfMyGameApp
 							break;
 						case 2:
 							// Сериализация в JSON
-							string json = Newtonsoft.Json.JsonConvert.SerializeObject(state);
+							json = Newtonsoft.Json.JsonConvert.SerializeObject(state);
 							System.IO.File.WriteAllText(dialog.FileName, json);
 							break;
 						default:
@@ -235,16 +237,36 @@ namespace WpfMyGameApp
 				// Диалог для выбора имени файла
 				var dialog = new System.Windows.Forms.OpenFileDialog()
 				{
-					Filter = "Файл (*.xml)|*.xml|Все файлы (*.*)|*.*"
+					Filter = "Файл (*.xml)|*.xml|Файл (*.json)|*.json|Все файлы (*.*)|*.*"
 				};
 				// Выбор файла для загрузки
 				if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 				{
 					state = GameState.Load(dialog.FileName);
-					for (int i = 0; i < 7; i++)
+
+					switch (dialog.FilterIndex)
 					{
-						cells[i].DataContext = state.Entities[i];
+						// XML
+						case 1:
+							for (int i = 0; i < 8; i++)
+							{
+								cells[i].DataContext = state.Entities[i];
+							}
+							break;
+						// JSON
+						case 2:
+							// с десериализацией пока проблемы
+							//state = Newtonsoft.Json.JsonConvert.DeserializeObject<GameState>(dialog.FileName);
+							//for (int i = 0; i < 8; i++)
+							//{
+							//	cells[i].DataContext = state.Entities[i];
+							//}
+							break;
+						default:
+							break;
 					}
+
+
 				}
 			}
 			catch (Exception ex)

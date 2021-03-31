@@ -177,5 +177,17 @@ namespace WpfMyGameApp
 			else if (!IsRackCard && (card is Rack))
 				e.Effects = DragDropEffects.None;
 		}
+
+		private void card_DragEnter(object sender, DragEventArgs e)
+		{
+			border.StrokeDashArray = new DoubleCollection() { 3, 1 };
+			border.Stroke = Brushes.LightCyan;
+		}
+
+		private void card_DragLeave(object sender, DragEventArgs e)
+		{
+			border.StrokeDashArray = null;
+			border.Stroke = Brushes.Navy;
+		}		
 	}
 }

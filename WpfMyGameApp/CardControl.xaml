@@ -9,7 +9,10 @@
              DataContextChanged="CardControl1_DataContextChanged">
     <Grid x:Name="card" Background="Bisque" Width="160" Height="70" 
           MouseDown="grid_MouseDown" 
-          MouseMove="grid_MouseMove" DragOver="card_DragOver">
+          MouseMove="grid_MouseMove" 
+          DragOver="card_DragOver"
+          DragEnter="card_DragEnter"
+          DragLeave="card_DragLeave">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -20,6 +23,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Rectangle x:Name="border" Grid.RowSpan="3" Grid.ColumnSpan="3" Stroke="Navy" StrokeThickness="2"/>
         <TextBlock x:Name="property1" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TextBlock x:Name="property2" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TextBlock x:Name="property3" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
