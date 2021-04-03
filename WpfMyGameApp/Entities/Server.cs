@@ -21,6 +21,12 @@ namespace WpfMyGameApp.Entities
 		public int Size { get; set; }
 
 		/// <summary>
+		/// Емкость системы хранения в Гб
+		/// </summary>
+		[XmlAttribute()]
+		public int Storage { get; set; }
+
+		/// <summary>
 		/// Кол-во серверов в отсеке
 		/// </summary>
 		public int Count

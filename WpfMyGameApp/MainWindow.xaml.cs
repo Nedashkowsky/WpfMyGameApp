@@ -43,22 +43,22 @@ namespace WpfMyGameApp
 
 		private void CreateCard()
 		{
-			var server = new Server()
-			{
-				Name = "IBM",
-				Price = 1000,
-				Weight = 10,
-				CPUs = 2,
-				Size = 1
-			};
+			var db = new Database();
 
-			var card = new CardControl()
+			var list = db.GetServers();
+
+			int y = 80;
+			foreach(var server in list)
 			{
-				DataContext = server
-			};
-			Canvas.SetLeft(card, 500);
-			Canvas.SetTop(card, 80);
-			canvas.Children.Add(card);
+				var card = new CardControl()
+				{
+					DataContext = server
+				};
+				Canvas.SetLeft(card, 300);
+				Canvas.SetTop(card, y);
+				canvas.Children.Add(card);
+				y += 100;
+			}
 
 			var kvm = new KvmConsole()
 			{
