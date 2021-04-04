@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using WpfMyGameApp.Entities;
+using System.Linq;
 
 namespace WpfMyGameApp
 {
@@ -45,10 +46,14 @@ namespace WpfMyGameApp
 		{
 			var db = new Database();
 
-			var list = db.GetServers();
+			// Соединение с новой БД
+			var ef = new DB();
+			// Запрос списка шкафов
+			var list = ef.Racks.ToList();
+			//List<Storage> list2 = ef.Storages.ToList();
 
 			int y = 80;
-			foreach(var server in list)
+			foreach(var server in db.GetServers())
 			{
 				var card = new CardControl()
 				{
@@ -73,7 +78,7 @@ namespace WpfMyGameApp
 				DataContext = kvm
 			};
 			Canvas.SetLeft(card2, 500);
-			Canvas.SetTop(card2, 200);
+			Canvas.SetTop(card2, 80);
 			canvas.Children.Add(card2);
 
 			var rack = new Rack()
@@ -88,8 +93,8 @@ namespace WpfMyGameApp
 			{
 				DataContext = rack
 			};
-			Canvas.SetLeft(card3, 500);
-			Canvas.SetTop(card3, 320);
+			Canvas.SetLeft(card3, 1100);
+			Canvas.SetTop(card3, 80);
 			canvas.Children.Add(card3);
 
 			var nwswitch = new NetworkSwitch()
@@ -120,8 +125,8 @@ namespace WpfMyGameApp
 			{
 				DataContext = storage
 			};
-			Canvas.SetLeft(card5, 700);
-			Canvas.SetTop(card5, 200);
+			Canvas.SetLeft(card5, 900);
+			Canvas.SetTop(card5, 80);
 			canvas.Children.Add(card5);
 		}
 

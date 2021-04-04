@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Serialization;
 
 namespace WpfMyGameApp.Entities
@@ -14,9 +15,16 @@ namespace WpfMyGameApp.Entities
 	public abstract class Entity
 	{
 		/// <summary>
+		/// Первичный ключs
+		/// </summary>
+		[Key()]	// Не обязательно, т. к. используется имя ID
+		public Guid ID { get; set; }
+
+		/// <summary>
 		/// Имя
 		/// </summary>
 		[XmlAttribute()]
+		[MaxLength(127)]
 		public string Name { get; set; }
 
 		/// <summary>
@@ -43,6 +51,11 @@ namespace WpfMyGameApp.Entities
 				}
 				price = value;
 			}
+		}
+
+		public Entity()
+		{
+			ID = Guid.NewGuid();
 		}
 	}
 }

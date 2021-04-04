@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Serialization;
 
 namespace WpfMyGameApp.Entities
@@ -25,6 +26,8 @@ namespace WpfMyGameApp.Entities
 		/// <summary>
 		/// Картинка
 		/// </summary>
+		[XmlIgnore()]
+		[NotMapped()] // не отображается на БД
 		public string Image
 		{
 			get { return img; }
