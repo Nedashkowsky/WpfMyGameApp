@@ -13,7 +13,7 @@ namespace WpfMyGameApp.Migrations
                     {
                         ID = c.Guid(nullable: false),
                         Count = c.Int(nullable: false),
-                        Capacity = c.Int(nullable: false),
+                        Capacity = c.Int(nullable: false, defaultValueSql:"42"),
                         Name = c.String(maxLength: 127, storeType: "nvarchar"),
                         Price = c.Int(nullable: false),
                     })

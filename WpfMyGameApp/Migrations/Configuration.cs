@@ -17,13 +17,21 @@ namespace WpfMyGameApp.Migrations
         {
             //  This method will be called after migrating to the latest version.
 
-            context.Racks.AddOrUpdate(new Entities.Rack()
-            { 
-                Name = "IBM",
-                Price = 300,
-                Capacity = 40,
-                Count = 6
-            });
+            context.Racks.AddIfNameNotExists(
+                new Entities.Rack()
+                { 
+                    Name = "IBM",
+                    Price = 300,
+                    Capacity = 400,
+                    Count = 6
+                },
+                 new Entities.Rack()
+                 {
+                     Name = "APC",
+                     Price = 400,
+                     Capacity = 550,
+                     Count = 6
+                 });
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.

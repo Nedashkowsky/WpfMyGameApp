@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="Database.cs" />
     <Compile Include="DB.cs" />
+    <Compile Include="DBExtender.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Equipment.cs" />
     <Compile Include="Entities\GameState.cs" />
