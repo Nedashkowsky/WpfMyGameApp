@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace WpfMyGameApp.Entities
 {
-	public class Equipment : Entity
+	public abstract class Equipment : Entity
 	{
 		/// <summary>
 		/// Масса в кг

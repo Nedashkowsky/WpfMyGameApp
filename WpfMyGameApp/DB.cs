@@ -32,10 +32,10 @@ namespace WpfMyGameApp
 		// Добавьте DbSet для каждого типа сущности, который требуется включить в модель. Дополнительные сведения 
 		// о настройке и использовании модели Code First см. в статье http://go.microsoft.com/fwlink/?LinkId=390109.
 
-		/// <summary>
-		/// Монтажные шкафы
-		/// </summary>
+		public virtual DbSet<Entities.KvmConsole> Kvms { get; set; }
+		public virtual DbSet<Entities.NetworkSwitch> Switches { get; set; }
 		public virtual DbSet<Entities.Rack> Racks { get; set; }
+		public virtual DbSet<Entities.Server> Servers { get; set; }
 		public virtual DbSet<Entities.Storage> Storages { get; set; }
 	}
 }

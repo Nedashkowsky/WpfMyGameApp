@@ -46,6 +46,11 @@ namespace WpfMyGameApp
 			InitializeComponent();
 		}
 
+		public CardControl(bool isRackCard)
+		{
+			this.isRackCard = isRackCard;
+		}
+
 		/// <summary>
 		/// Нажатие кнопки мыши
 		/// </summary>

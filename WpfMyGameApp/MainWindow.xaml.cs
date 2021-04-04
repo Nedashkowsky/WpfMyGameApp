@@ -50,7 +50,6 @@ namespace WpfMyGameApp
 			var ef = new DB();
 			// Запрос списка шкафов
 			var list = ef.Racks.ToList();
-			//List<Storage> list2 = ef.Storages.ToList();
 
 			int y = 80;
 			foreach(var server in db.GetServers())
@@ -81,21 +80,18 @@ namespace WpfMyGameApp
 			Canvas.SetTop(card2, 80);
 			canvas.Children.Add(card2);
 
-			var rack = new Rack()
+			y = 80;
+			foreach (var rack in ef.Racks.ToList())
 			{
-				Name = "Rack",
-				Price = 900,
-				Capacity = 100,
-				Count = 2
-			};
-
-			var card3 = new CardControl()
-			{
-				DataContext = rack
-			};
-			Canvas.SetLeft(card3, 1100);
-			Canvas.SetTop(card3, 80);
-			canvas.Children.Add(card3);
+				var card = new CardControl()
+				{
+					DataContext = rack
+				};
+				Canvas.SetLeft(card, 1100);
+				Canvas.SetTop(card, y);
+				canvas.Children.Add(card);
+				y += 100;
+			}
 
 			var nwswitch = new NetworkSwitch()
 			{

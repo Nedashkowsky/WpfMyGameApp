@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Xml.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WpfMyGameApp.Entities
 {
+	[Table("Kvm Modules")]
 	public class KvmConsole : Equipment
 	{
 		/// <summary>
