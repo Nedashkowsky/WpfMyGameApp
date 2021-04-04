@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
@@ -27,17 +28,30 @@ namespace WpfMyGameApp
 			var command = connection.CreateCommand();
 			command.CommandText = "SELECT `Name`, `Price`, `Size`, `Weight`, `CPUs`, `Storage` FROM servers";
 			MySqlDataReader reader = command.ExecuteReader();
-			while(reader.Read())
+			while (reader.Read())
 			{
-				var server = new Entities.Server()
+				var server = new Entities.Server();
+				// Последовательная обработка всех столбцов таблицы
+				for (int col = 0; col < reader.FieldCount; col++)
 				{
-					Name = reader.GetString("Name"),
-					Price = reader.GetInt32("Price"),
-					Size = reader.GetInt32("Size"),
-					Weight = reader.GetInt32("Weight"),
-					CPUs = reader.GetInt32("CPUs"),
-					Storage = reader.GetInt32("Storage"),
-				};
+					// Имя столбца таблицы (`Price`, `Size` и тд)
+					string column = reader.GetName(col);
+					// Имя типа данных столбца таблицы
+					string type = reader.GetFieldType(col).Name;
+					// Свойство объекта server с именем равным имени столбца таблицы
+					PropertyInfo prop = server.GetType().GetProperty(column);
+					switch (type)
+					{
+						case nameof(String):
+							prop.SetValue(server, reader.GetString(col));
+							break;
+						case nameof(Int32):
+							prop.SetValue(server, reader.GetInt32(col));
+							break;
+						default:
+							throw new Exception($"Тип данных '{type}' не поддерживается");
+					}
+				}
 				list.Add(server);
 			}
 			return list;
