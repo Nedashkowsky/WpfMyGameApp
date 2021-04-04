@@ -49,7 +49,7 @@ namespace WpfMyGameApp
 			// Соединение с новой БД
 			var ef = new DB();
 			// Запрос списка шкафов
-			var list = ef.Racks.ToList();
+			//var list = ef.Racks.ToList();
 
 			int y = 80;
 			foreach(var server in db.GetServers())
