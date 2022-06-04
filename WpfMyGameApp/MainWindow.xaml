@@ -6,19 +6,21 @@
         xmlns:local="clr-namespace:WpfMyGameApp"
         mc:Ignorable="d"
         Title="Построй свой ЦОД" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded">
-    <Grid>
-        <Canvas x:Name="canvas">
-            <Rectangle x:Name="rect" Fill="AliceBlue" HorizontalAlignment="Left" Height="39" Stroke="Black" VerticalAlignment="Top" Width="90" MouseDown="rect_MouseDown" MouseMove="rect_MouseMove" Canvas.Left="325" Canvas.Top="99"/>
-
-            <Rectangle x:Name="rack" Fill="DarkGray" Height="580" Stroke="Black" Canvas.Top="10" Width="243"/>
-            <Menu x:Name="menu" Height="23" Width="794"/>
-
-            <!--<Grid Canvas.Left="30" Canvas.Top="30" Width="182">
-                <Rectangle  x:Name="slot" Fill="LightGray" Height="67" Width="152" Canvas.Top="10" AllowDrop="True" Drop="slot_Drop"/>
-                <TextBlock Text="text" Height="41" TextAlignment="Center"></TextBlock>
-            </Grid>-->
+    <DockPanel LastChildFill="True">
+        <Menu x:Name="menu" Height="20" DockPanel.Dock="Top">
+            <MenuItem Header="Игра">
+                <MenuItem Header="Новая игра"></MenuItem>
+                <MenuItem x:Name="load" Header="Загрузить..." Click="load_Click"></MenuItem>
+                <MenuItem x:Name="save" Header="Сохранить" Click="save_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="exit" Header="Выход" Click="exit_Click"></MenuItem>
+        </Menu>
+        <Canvas x:Name="canvas" DockPanel.Dock="Left">
+            <Rectangle x:Name="rack" Fill="DarkGray" Canvas.Left="10" Canvas.Top="10" Height="670" Stroke="Black" Width="200"/>
+            <TextBlock x:Name="price" Canvas.Left="248" TextWrapping="Wrap" Text="Price" Canvas.Top="29"/>
+            <TextBlock x:Name="capacity" Canvas.Left="248" TextWrapping="Wrap" Text="Capacity" Canvas.Top="50"/>
         </Canvas>
-    </Grid>
+    </DockPanel>
 
 
 </Window>

@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WpfMyGameApp.Entities;
+using System.Linq;
 
 namespace WpfMyGameApp
 {
@@ -24,71 +16,105 @@ namespace WpfMyGameApp
 		/// Высота ячейки
 		/// </summary>
 		private const double height = 60;
+
 		/// <summary>
 		/// Поле между ячейками
 		/// </summary>
 		private const double spanY = 20;
 
-		private double dx;
-		private double dy;
+		/// <summary>
+		/// Список ячеек шкафа
+		/// </summary>
+		public static readonly List<CardControl> cells;
+
+		/// <summary>
+		/// Текущее состояние игры
+		/// </summary>
+		private GameState state;
+		
+		static MainWindow()
+		{
+			cells = new List<CardControl>();
+		}
 
 		public MainWindow()
 		{
 			InitializeComponent();
 		}
 
-		/// <summary>
-		/// Нажатие кнопки мыши
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void rect_MouseDown(object sender, MouseButtonEventArgs e)
+		private void CreateCard()
 		{
-			// запомнить смещение для последующей прорисовки
-			dx = Canvas.GetLeft((UIElement)sender) - e.GetPosition(this).X;
-			dy = Canvas.GetTop((UIElement)sender) - e.GetPosition(this).Y;
+			var db = new Database();
 
-			// сохран данных для перетаскивания
-			var data = new DataObject();
-			data.SetData(DataFormats.StringFormat, "test");
-			// начало перетаскивая
-			DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Copy);
-		}
+			// Соединение с новой БД
+			var ef = new DB();
+			// Запрос списка шкафов
+			//var list = ef.Racks.ToList();
 
-		/// <summary>
-		/// Перемещение мыши
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void rect_MouseMove(object sender, MouseEventArgs e)
-		{
-			// Проверка на нажатие левой кнопки
-			if (e.LeftButton == MouseButtonState.Pressed)
+			int y = 80;
+			foreach(var server in ef.Servers.ToList())
 			{
-				// к текущ координате добавляем смещение
-				double x = e.GetPosition(this).X + dx;
-				double y = e.GetPosition(this).Y + dy;
-
-				Canvas.SetLeft((UIElement)sender, x);
-				Canvas.SetTop((UIElement)sender, y);
+				var card = new CardControl()
+				{
+					DataContext = server
+				};
+				Canvas.SetLeft(card, 300);
+				Canvas.SetTop(card, y);
+				canvas.Children.Add(card);
+				y += 100;
 			}
-		}
 
-		/// <summary>
-		/// Завершение перетаскивания
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void slot_Drop(object sender, DragEventArgs e)
-		{
-			IDataObject data = e.Data;
-			// as string вернет null если не получится привести типы 
-			// (string) выбросило бы исключение
-			string s = data.GetData(DataFormats.StringFormat) as string;
-			var grid = sender as Grid;
-			var rect = grid.Children[0] as Rectangle;
-			rect.Fill = new SolidColorBrush(Colors.Red);
-			//slot.Fill = new SolidColorBrush(Colors.Red);
+			y = 80;
+			foreach (var kvm in ef.Kvms.ToList())
+			{
+				var card = new CardControl()
+				{
+					DataContext = kvm
+				};
+				Canvas.SetLeft(card, 500);
+				Canvas.SetTop(card, y);
+				canvas.Children.Add(card);
+				y += 100;
+			}
+
+			y = 80;
+			foreach (var nwswitch in ef.Switches.ToList())
+			{
+				var card = new CardControl()
+				{
+					DataContext = nwswitch
+				};
+				Canvas.SetLeft(card, 700);
+				Canvas.SetTop(card, y);
+				canvas.Children.Add(card);
+				y += 100;
+			}
+
+			y = 80;
+			foreach (var storage in ef.Storages.ToList())
+			{
+				var card = new CardControl()
+				{
+					DataContext = storage
+				};
+				Canvas.SetLeft(card, 900);
+				Canvas.SetTop(card, y);
+				canvas.Children.Add(card);
+				y += 100;
+			}
+
+			y = 80;
+			foreach (var rack in ef.Racks.ToList())
+			{
+				var card = new CardControl()
+				{
+					DataContext = rack
+				};
+				Canvas.SetLeft(card, 1100);
+				Canvas.SetTop(card, y);
+				canvas.Children.Add(card);
+				y += 100;
+			}
 		}
 
 		/// <summary>
@@ -98,35 +124,165 @@ namespace WpfMyGameApp
 		/// <param name="e"></param>
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			for (var i = 0; i < 7; i++)
+			// Формирование шкафа
+			for (var i = 0; i < 8; i++)
 			{
-				var grid = new Grid()
+				var item = new CardControl()
 				{
 					AllowDrop = true
 				};
-				Canvas.SetLeft(grid, 30);
-				Canvas.SetTop(grid, 30 + i * (height + spanY));
-				grid.Drop += slot_Drop;
 
-				// инициализатор
-				var rect = new Rectangle()
+				Canvas.SetLeft(item, 30);
+				Canvas.SetTop(item, 30 + i * (height + spanY));
+				item.Drop += CardControl.card_Drop;
+
+				// Сохранение ячейки шкафа в список
+				cells.Add(item);
+
+				canvas.Children.Add(item);
+			}
+			cells[7].IsRackCard = true;
+			CreateCard();
+		}
+
+		/// <summary>
+		/// Выход из приложения
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void exit_Click(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
+
+		string json;
+
+		/// <summary>
+		/// Сохранение состояния игры в файл
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void save_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				// Диалог для выбора имени файла
+				var dialog = new System.Windows.Forms.SaveFileDialog()
 				{
-					Width = 152,
-					Height = height,
-					Stroke = new SolidColorBrush(Colors.Black),
-					Fill = new SolidColorBrush(Colors.LightGray)
+					Filter = "Файл (*.xml)|*.xml|Файл (*.json)|*.json|Все файлы (*.*)|*.*"
 				};
-				grid.Children.Add(rect);
 
-				var text = new TextBlock()
+				// Выбор файла для сохранения
+				if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 				{
-					HorizontalAlignment = HorizontalAlignment.Center,
-					VerticalAlignment = VerticalAlignment.Center,
-					Text = "text"
-				};
-				grid.Children.Add(text);
+					state = new GameState();
+					foreach (CardControl cell in cells)
+					{
+						if (cell.DataContext != null)
+						{
+							var entity = cell.DataContext as Entity;
+							state.Entities.Add(entity);
+							// Расчета цены
+							state.Price += entity.Price;
+							// Расчет нагрузки
+							if(entity is Rack)
+							{
+								state.Capacity += (entity as Rack).Capacity;
+							}
+							else if (entity is Equipment)
+							{
+								state.Capacity -= (entity as Equipment).Weight;
+							}
+							else
+							{
+								throw new Exception("Неизвестное оборудование в стойке");
+							}
+						}
+						else 
+							state.Entities.Add(new Server());
+					}
 
-				canvas.Children.Add(grid);
+					// Отображение на экране
+					price.Text = state.Price.ToString();
+					capacity.Text = state.Capacity.ToString();
+
+					switch (dialog.FilterIndex)
+					{
+						case 1:
+							// Сериализация в XML
+							state.Save(dialog.FileName);
+							break;
+						case 2:
+							// Сериализация в JSON
+							json = Newtonsoft.Json.JsonConvert.SerializeObject(state);
+							System.IO.File.WriteAllText(dialog.FileName, json);
+							break;
+						default:
+							break;
+					}
+
+				}
+			}
+			catch (Exception ex)
+			{
+				string message = "";
+				do
+				{
+					message += ex.Message + Environment.NewLine;
+					ex = ex.InnerException;
+				}
+				while (ex != null);
+				System.Windows.Forms.MessageBox.Show(message);
+			}
+		}
+
+		/// <summary>
+		/// Загрузка игры из файла
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void load_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				// Диалог для выбора имени файла
+				var dialog = new System.Windows.Forms.OpenFileDialog()
+				{
+					Filter = "Файл (*.xml)|*.xml|Файл (*.json)|*.json|Все файлы (*.*)|*.*"
+				};
+				// Выбор файла для загрузки
+				if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+				{
+					state = GameState.Load(dialog.FileName);
+
+					switch (dialog.FilterIndex)
+					{
+						// XML
+						case 1:
+							for (int i = 0; i < 8; i++)
+							{
+								cells[i].DataContext = state.Entities[i];
+							}
+							break;
+						// JSON
+						case 2:
+							// с десериализацией пока проблемы
+							//state = Newtonsoft.Json.JsonConvert.DeserializeObject<GameState>(dialog.FileName);
+							//for (int i = 0; i < 8; i++)
+							//{
+							//	cells[i].DataContext = state.Entities[i];
+							//}
+							break;
+						default:
+							break;
+					}
+
+
+				}
+			}
+			catch (Exception ex)
+			{
+				System.Windows.Forms.MessageBox.Show(ex.Message);
 			}
 		}
 	}
